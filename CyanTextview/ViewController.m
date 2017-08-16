@@ -27,7 +27,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    _textView = [[CYMarkTextView alloc]initWithFrame:CGRectMake(30, 40, 200, 100)];
+    _textView = [[CYMarkTextView alloc]initWithFrame:CGRectMake(30, 40, 200, 300)];
     
     _textView.backgroundColor = [UIColor yellowColor];
     _textView.delegate = self;
