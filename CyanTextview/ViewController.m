@@ -87,6 +87,10 @@
     
     _textView.text = [NSString stringWithFormat:@"%@",muStr];
     
+    NSLog(@"location : %ld,length : %ld",_textView.cyCelectedRange.location,_textView.cyCelectedRange.length);
+    
+    _textView.cyCelectedRange = NSMakeRange(_textView.cyCelectedRange.location + text.length, _textView.cyCelectedRange.length);
+    
     [_textView reloadAttri];
     [_textView becomeFirstResponder];
     
