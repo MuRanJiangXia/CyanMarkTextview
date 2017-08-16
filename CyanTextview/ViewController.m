@@ -47,7 +47,7 @@
 
 
 -(BOOL)textViewShouldBeginEditing:(UITextView *)textView{
-    
+
     //里延时调用一个函数，只要延0.1s，之后再获取光标就正常了
     [self performSelector:@selector(textViewDidChange:) withObject:textView afterDelay:0.1f];
     
@@ -58,6 +58,7 @@
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text;{
     
     if ([text isEqualToString:@"#"]) {
+        _textView.cyCelectedRange = textView.selectedRange;
         ShowViewController *showVC  = [ShowViewController new];
         showVC.delegate = self;
         
@@ -73,6 +74,8 @@
 -(void)textViewDidChange:(UITextView *)textView{
     //保留光标的位置
     _textView.cyCelectedRange = textView.selectedRange;
+    
+
     [_textView reloadAttri];
 
 }
@@ -83,7 +86,11 @@
     [muStr insertString:text atIndex: _textView.cyCelectedRange.location];
     
     _textView.text = [NSString stringWithFormat:@"%@",muStr];
+    
     [_textView reloadAttri];
+    [_textView becomeFirstResponder];
+    
+
 
 }
 

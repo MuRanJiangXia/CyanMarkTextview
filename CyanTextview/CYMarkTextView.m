@@ -47,7 +47,7 @@
 
             }
         }
-    
+
         self.attributedText = attribute;
         self.selectedRange = _cyCelectedRange;
         
