@@ -125,6 +125,7 @@
 				TargetAttributes = {
 					87B4BDBE1F43DAE40099D309 = {
 						CreatedOnToolsVersion = 8.3.2;
+						DevelopmentTeam = YC78R8UJNE;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -292,7 +293,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = YC78R8UJNE;
 				INFOPLIST_FILE = CyanTextview/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = www.cyan.com.CyanTextview;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -303,7 +306,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = YC78R8UJNE;
 				INFOPLIST_FILE = CyanTextview/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = www.cyan.com.CyanTextview;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -329,6 +334,7 @@
 				87B4BDD81F43DAE40099D309 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

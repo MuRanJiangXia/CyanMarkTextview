@@ -10,6 +10,13 @@
 #import "ShowViewController.h"
 #import "CYMarkTextView.h"
 
+#ifdef DEBUG
+#define NSLog(FORMAT, ...) fprintf(stderr,"%s中%s:%d\t%s\n",[[[NSString stringWithUTF8String:__FILE__] lastPathComponent] UTF8String],[[[NSString stringWithUTF8String:__FUNCTION__] lastPathComponent] UTF8String] ,__LINE__, [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String])
+#else
+#define NSLog(FORMAT, ...) nil
+#endif
+
+
 @interface ViewController ()<UITextViewDelegate,ShowVCDelegate>{
     
     CYMarkTextView *_textView;
@@ -38,12 +45,26 @@
     _textView.cytextColor = _textView.textColor;
     _textView.cyTextFont = _textView.font;
     
+
+//    [_textView reloadAttri];
+    
+    NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
+    
+    paragraphStyle.lineSpacing = 10;// 字体的行间距
+    NSDictionary *attributes = @{
+                                 NSForegroundColorAttributeName:[UIColor redColor],
+                                 NSFontAttributeName:[UIFont systemFontOfSize:16],
+                                 NSParagraphStyleAttributeName:paragraphStyle
+                                 };
+    _textView.typingAttributes = attributes;
+    
     _textView.text = @"#云的微博红包###美美的红包#的微博#美美的红包###云的微博红包##云的微博红包#";
 
     [_textView reloadAttri];
-    
-    
+
 }
+
+
 
 
 -(BOOL)textViewShouldBeginEditing:(UITextView *)textView{
@@ -56,6 +77,7 @@
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text;{
+    
     
     if ([text isEqualToString:@"#"]) {
         _textView.cyCelectedRange = textView.selectedRange;
@@ -72,11 +94,24 @@
 }
 
 -(void)textViewDidChange:(UITextView *)textView{
+
+    
+    UITextRange *selectedRange = [textView markedTextRange];
+    //获取高亮部分
+    UITextPosition *pos = [textView positionFromPosition:selectedRange.start offset:0];
+    
+    //如果在变化中是高亮部分在变，就不要计算字符了
+    if (selectedRange && pos) {
+        NSLog(@"有高亮状态文字");
+        
+        return ;
+    }
     //保留光标的位置
     _textView.cyCelectedRange = textView.selectedRange;
+    [_textView reloadAttri];
     
 
-    [_textView reloadAttri];
+    
 
 }
 
@@ -84,10 +119,7 @@
 -(void)showVCChooseText:(NSString *)text{
     NSMutableString *muStr = [[NSMutableString alloc]initWithString:_textView.text] ;
     [muStr insertString:text atIndex: _textView.cyCelectedRange.location];
-    
     _textView.text = [NSString stringWithFormat:@"%@",muStr];
-    
-    NSLog(@"location : %ld,length : %ld",_textView.cyCelectedRange.location,_textView.cyCelectedRange.length);
     
     _textView.cyCelectedRange = NSMakeRange(_textView.cyCelectedRange.location + text.length, _textView.cyCelectedRange.length);
     
@@ -96,6 +128,24 @@
     
 
 
+}
+
+
+
+
+
+//  根据NSTextRange转换成 NSRange
+- (NSRange) selectedRange:(UITextView *)textField
+{
+    UITextPosition* beginning = textField.beginningOfDocument;
+    UITextRange* selectedRange = textField.selectedTextRange;
+    UITextPosition* selectionStart = selectedRange.start;
+    UITextPosition* selectionEnd = selectedRange.end;
+    const NSInteger location = [textField offsetFromPosition:beginning toPosition:selectionStart];
+    const NSInteger length = [textField offsetFromPosition:selectionStart toPosition:selectionEnd];
+    
+    NSRange range =  NSMakeRange(location, length);
+    return range;
 }
 
 @end
